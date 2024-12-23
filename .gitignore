@@ -1,3 +1,9 @@
 # bazel
-MODULE*
+MODULE.bazel.lock
 bazel-*
+
+# images
+*.png
+
+# vscode
+.vscode
