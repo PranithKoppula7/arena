@@ -1,11 +1,17 @@
 #include <gtest/gtest.h>
 
+#include "absl/status/statusor.h"
+
 #include "arena.h"
 
-TEST(ArenaTest, Construction) {
+TEST(ArenaTest, AllocateOneInteger) {
     arena::Arena<int> a = arena::Arena<int>(4);
 
-    ASSERT_EQ(a.GetCurrentAllocation(), 0);
+    absl::StatusOr<int*> status = a.Allocate(1);
+    int* p = *status;
+
+    ASSERT_TRUE(status.ok());
+    ASSERT_EQ(*p, 1);
 }
 
 TEST(ArenaTest, GetTypeSize) {
