@@ -9,9 +9,15 @@ arena::Arena<T>::Arena(size_t bytes) {
     if (bytes % sizeof(T) != 0) {
         throw std::invalid_argument("need bytes '%' sizeof(T) == 0");
     }
+
+    // global counts
     total_bytes_ = bytes;
+    type_size_ = sizeof(T);
+
+    // iterative counts
     next_addr_ = 0;
     curr_allocation_ = 0;
+
     bytes_ = (T*)malloc(bytes);
 }
 
@@ -23,6 +29,7 @@ absl::StatusOr<T*> arena::Arena<T>::Allocate(T val) {
 
     bytes_[next_addr_] = val;
     next_addr_++;
+    curr_allocation_ += type_size_;
     // TODO: have to give the correct address!!!
     return bytes_;
 }
@@ -30,6 +37,11 @@ absl::StatusOr<T*> arena::Arena<T>::Allocate(T val) {
 template <typename T>
 size_t arena::Arena<T>::GetCurrentAllocation() {
     return curr_allocation_;
+}
+
+template <typename T>
+size_t arena::Arena<T>::GetTypeSize() {
+    return type_size_;
 }
 
  template class arena::Arena<int>;
