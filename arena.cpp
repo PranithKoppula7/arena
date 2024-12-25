@@ -30,8 +30,7 @@ absl::StatusOr<T*> arena::Arena<T>::Allocate(T val) {
     bytes_[next_addr_] = val;
     next_addr_++;
     curr_allocation_ += type_size_;
-    // TODO: have to give the correct address!!!
-    return bytes_;
+    return &bytes_[next_addr_ - 1];
 }
 
 template <typename T>
