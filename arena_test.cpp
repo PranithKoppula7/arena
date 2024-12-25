@@ -5,7 +5,7 @@
 #include "arena.h"
 
 TEST(ArenaTest, AllocateOneInteger) {
-    arena::Arena<int> a = arena::Arena<int>(4);
+    arena::Arena<int> a = arena::Arena<int>(/*bytes=*/4);
 
     absl::StatusOr<int*> status = a.Allocate(1);
     int* p = *status;
@@ -15,7 +15,7 @@ TEST(ArenaTest, AllocateOneInteger) {
 }
 
 TEST(ArenaTest, AllocateTwoInteger) {
-    arena::Arena<int> a = arena::Arena<int>(8);
+    arena::Arena<int> a = arena::Arena<int>(/*bytes=*/8);
 
     absl::StatusOr<int*> status1 = a.Allocate(1);
     absl::StatusOr<int*> status2 = a.Allocate(2);
@@ -28,6 +28,10 @@ TEST(ArenaTest, AllocateTwoInteger) {
     ASSERT_EQ(*p2, 2);
 }
 
+TEST(ArenaTest, ConstructionWithUndivisibleBytes) {
+    EXPECT_THROW({arena::Arena<int>(/*bytes=*/5);}, std::invalid_argument);
+}
+
 TEST(ArenaTest, GetTypeSize) {
-    ASSERT_EQ(arena::Arena<int>(4).GetTypeSize(), 4); // int = 4 bytes
+    ASSERT_EQ(arena::Arena<int>(/*bytes=*/4).GetTypeSize(), 4); // int = 4 bytes
 }
