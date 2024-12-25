@@ -1,9 +1,8 @@
 #include "arena.h"
 
-// #include "absl/status/status.h"
-// #include "absl/status/statusor.h"
-
 #include <stdexcept>
+
+#include "absl/status/statusor.h"
 
 template <typename T>
 arena::Arena<T>::Arena(size_t bytes) {
@@ -17,10 +16,9 @@ arena::Arena<T>::Arena(size_t bytes) {
 }
 
 template <typename T>
-T* arena::Arena<T>::Allocate(T val) {
+absl::StatusOr<T*> arena::Arena<T>::Allocate(T val) {
     if (curr_allocation_ == total_bytes_) {
-        throw std::out_of_range("out of memory");
-        // return absl::OutOfRangeError("out of memory");
+        return absl::OutOfRangeError("out of memory");
     }
 
     bytes_[next_addr_] = val;

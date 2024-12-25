@@ -2,10 +2,10 @@ cc_library(
   name = "arena",
   hdrs = ["arena.h"],
   srcs = ["arena.cpp"],
-  # deps = [
-  #   "@abseil-cpp//absl/status",
-  #   "@abseil-cpp//absl/statusor",
-  # ]
+  deps = [
+    "@abseil-cpp//absl/status:status",
+    "@abseil-cpp//absl/status:statusor",
+  ]
 )
 
 cc_binary(
