@@ -16,6 +16,5 @@ private:
     size_t type_size_;
     size_t next_addr_;
     size_t total_bytes_;
-    size_t curr_allocation_;
 };
 }

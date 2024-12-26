@@ -35,3 +35,16 @@ TEST(ArenaTest, ConstructionWithUndivisibleBytes) {
 TEST(ArenaTest, GetTypeSize) {
     ASSERT_EQ(arena::Arena<int>(/*bytes=*/4).GetTypeSize(), 4); // int = 4 bytes
 }
+
+TEST(ArenaTest, GetCurrentAllocationWithOneInteger) {
+    arena::Arena<int> a = arena::Arena<int>(/*bytes=*/4);
+    {
+        SCOPED_TRACE("init get allocation");
+        EXPECT_EQ(a.GetCurrentAllocation(), 0);
+    }
+    {
+        SCOPED_TRACE("allocating one integer");
+        EXPECT_TRUE(a.Allocate(1).ok());
+        EXPECT_EQ(a.GetCurrentAllocation(), 4);
+    }
+}
