@@ -41,4 +41,4 @@ size_t arena::Arena<T>::GetTypeSize() {
     return type_size_;
 }
 
- template class arena::Arena<int>;
+template class arena::Arena<int>;
