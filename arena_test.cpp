@@ -28,6 +28,19 @@ TEST(ArenaTest, AllocateTwoInteger) {
     ASSERT_EQ(*p2, 2);
 }
 
+TEST(ArenaTest, AllocateOverflow) {
+    arena::Arena<int> a = arena::Arena<int>(/*bytes=*/8);
+
+    absl::StatusOr<int*> status1 = a.Allocate(1);
+    absl::StatusOr<int*> status2 = a.Allocate(2);
+    absl::StatusOr<int*> status3 = a.Allocate(3);
+
+    ASSERT_TRUE(status1.ok());
+    ASSERT_TRUE(status2.ok());
+    ASSERT_FALSE(status3.ok());
+    EXPECT_EQ(status3.status().code(), absl::StatusCode::kOutOfRange);
+}
+
 TEST(ArenaTest, ConstructionWithUndivisibleBytes) {
     EXPECT_THROW({arena::Arena<int>(/*bytes=*/5);}, std::invalid_argument);
 }
