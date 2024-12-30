@@ -1,5 +1,6 @@
 #include <stddef.h>
 
+#include "absl/status/status.h"
 #include "absl/status/statusor.h"
 
 namespace arena {
@@ -7,7 +8,9 @@ template <typename T>
 class Arena {
     public:
         Arena(size_t bytes);
+
         absl::StatusOr<T*> Allocate(T val);
+        absl::Status Free();
 
         size_t GetCurrentAllocation();
         size_t GetTypeSize();

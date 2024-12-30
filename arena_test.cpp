@@ -48,3 +48,13 @@ TEST(ArenaTest, GetCurrentAllocationWithOneInteger) {
         EXPECT_EQ(a.GetCurrentAllocation(), 4);
     }
 }
+
+TEST(ArenaTest, Free) {
+    arena::Arena<int> a = arena::Arena<int>(/*bytes=*/4);
+
+    absl::StatusOr<int*> status = a.Allocate(1);
+    absl::Status freed_status = a.Free();
+
+    ASSERT_TRUE(status.ok());
+    ASSERT_TRUE(freed_status.ok());
+}

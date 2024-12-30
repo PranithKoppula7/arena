@@ -2,6 +2,7 @@
 
 #include <stdexcept>
 
+#include "absl/status/status.h"
 #include "absl/status/statusor.h"
 
 template <typename T>
@@ -29,6 +30,12 @@ absl::StatusOr<T*> arena::Arena<T>::Allocate(T val) {
     bytes_[next_addr_] = val;
     next_addr_++;
     return &bytes_[next_addr_ - 1];
+}
+
+template <typename T>
+absl::Status arena::Arena<T>::Free() {
+    free(bytes_);
+    return absl::OkStatus();
 }
 
 template <typename T>
