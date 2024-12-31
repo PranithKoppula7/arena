@@ -8,11 +8,6 @@ cc_library(
   ]
 )
 
-cc_binary(
-  name = "main",
-  srcs = ["main.cc"],
-)
-
 cc_test(
   name = "arena_test",
   size = "small",
@@ -21,5 +16,13 @@ cc_test(
     "@googletest//:gtest",
     "@googletest//:gtest_main",
     ":arena",
+  ]
+)
+
+cc_binary(
+  name = "main",
+  srcs = ["main.cc"],
+  deps = [
+    "@google_benchmark//:benchmark_main"
   ]
 )
