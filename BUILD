@@ -23,6 +23,7 @@ cc_binary(
   name = "main",
   srcs = ["main.cc"],
   deps = [
+    ":arena",
     "@google_benchmark//:benchmark_main"
   ]
 )
