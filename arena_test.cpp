@@ -8,10 +8,10 @@ TEST(ArenaTest, AllocateOneInteger) {
     arena::Arena<int> a = arena::Arena<int>(/*bytes=*/4);
 
     absl::StatusOr<int*> status = a.Allocate(1);
+    ASSERT_TRUE(status.ok());
     int* p = *status;
 
-    ASSERT_TRUE(status.ok());
-    ASSERT_EQ(*p, 1);
+    EXPECT_EQ(*p, 1);
 }
 
 TEST(ArenaTest, AllocateTwoInteger) {
