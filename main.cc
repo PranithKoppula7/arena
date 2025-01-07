@@ -4,6 +4,8 @@
 
 #include "arena.h"
 
+static int ITERATIONS = 100000;
+
 class SimpleMemoryManager : public benchmark::MemoryManager {
 public:
     int64_t num_allocs;
@@ -64,11 +66,11 @@ static void BM_memory(benchmark::State& state) {
         }
 }
 
-BENCHMARK(BM_memory)->Unit(benchmark::kMillisecond)->Iterations(17);
+BENCHMARK(BM_memory)->Unit(benchmark::kMillisecond)->Iterations(ITERATIONS);
 
 
-BENCHMARK(arena_initialization);
-BENCHMARK(manual_loop_mallocation);
+BENCHMARK(arena_initialization)->Iterations(ITERATIONS);
+BENCHMARK(manual_loop_mallocation)->Iterations(ITERATIONS);
 
 int main(int argc, char** argv) {
     ::benchmark::RegisterMemoryManager(mm.get());
