@@ -19,13 +19,13 @@ TEST(ArenaTest, AllocateTwoInteger) {
 
     absl::StatusOr<int*> status1 = a.Allocate(1);
     absl::StatusOr<int*> status2 = a.Allocate(2);
+    ASSERT_TRUE(status1.ok());
+    ASSERT_TRUE(status2.ok());
     int* p1 = *status1; 
     int* p2 = *status2;
 
-    ASSERT_TRUE(status1.ok());
-    ASSERT_TRUE(status2.ok());
-    ASSERT_EQ(*p1, 1);
-    ASSERT_EQ(*p2, 2);
+    EXPECT_EQ(*p1, 1);
+    EXPECT_EQ(*p2, 2);
 }
 
 TEST(ArenaTest, AllocateOverflow) {
