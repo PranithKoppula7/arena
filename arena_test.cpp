@@ -66,8 +66,8 @@ TEST(ArenaTest, Free) {
     arena::Arena<int> a = arena::Arena<int>(/*bytes=*/4);
 
     absl::StatusOr<int*> status = a.Allocate(1);
+    ASSERT_TRUE(status.ok());
     absl::Status freed_status = a.Free();
 
-    ASSERT_TRUE(status.ok());
-    ASSERT_TRUE(freed_status.ok());
+    EXPECT_TRUE(freed_status.ok());
 }
